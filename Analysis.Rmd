@@ -1,0 +1,294 @@
+---
+title: "Analisi"
+author: "Marco Torchiano"
+date: "31/01/2019"
+output:
+  html_document: default
+  pdf_document: 
+    keep_tex: yes
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(knitr)
+ggplot2::update_geom_defaults("bar", list(fill = "steelblue",color=NA))
+ggplot2::update_geom_defaults("point", list(color = "steelblue",color=NA))
+ggplot2::update_geom_defaults("violin", list(fill = "steelblue",color="navy"))
+scale_colour_discrete <- function(...) scale_colour_brewer(..., type = "qual", palette="Set1")
+ggplot2::theme_set(theme_light())
+```
+```{r load data}
+filenames = c(
+E = "espresso.csv",
+EA = "eyeautomate_scripted.csv",
+S = "sikuli_scripted.csv",
+EAJ = "eyeautomate_java.csv",
+SJ = "sikuli_java.csv",
+CES = "combined_eyeautomate_sikuli.csv",
+CSE = "combined_sikuli_eyeautomate.csv"
+)
+
+## Load and collate data
+
+d = NULL;
+for(i in 1:length(filenames)){
+  f = filenames[i];
+  td = read.csv(f,header=TRUE,sep=";");
+  if(! "Result" %in% names(td)) td$Result="pass";
+  td$Tool = names(f);
+  if(!is.null(d)){
+    for( m in names(d)[! names(d) %in% names(td)]){
+      td[[m]] = NA
+    }
+    for( m in names(td)[! names(td) %in% names(d)]){
+      d[[m]] = NA
+    }
+  }
+  d = rbind(d,td);
+}
+
+## fix data and compute derived data
+
+d$Tool <- factor(d$Tool,names(filenames),ordered=TRUE)
+d$TotalTime <- as.numeric(d$TotalTime)
+d$App = gsub(".+\\.","",gsub("\\.alpha$","",d$Package))
+
+alpha = 0.05
+```
+
+
+**NB: divide by app!!!**
+
+
+```{r summarize } 
+d.sum = d %>% group_by(App,Tool,Case) %>% 
+  summarize(
+    Outcome = sum(Result=="pass")/length(Result),
+    TestCat = case_when(
+      Outcome == 0 ~ "Fail",
+      Outcome == 1 ~ "Pass",
+      TRUE ~ "Flaky"
+  )) %>% mutate(TestCat = factor(TestCat,c("Fail","Flaky","Pass"),ordered=T))
+
+```
+
+```{r graphical-summary,fig.height=10,fig.width=8}
+d.sum %>% ggplot(aes(x=Tool,y=Case,fill=Outcome))+
+  geom_tile(color="white")+
+  scale_fill_gradientn(name="Success\nRate",
+                       colors = c("firebrick","gold","gold","steelblue"),
+                       values=c(0,.1,.9,1))+
+  geom_text(aes(label=paste0(round(Outcome*100,1),"%")),size=2,color="black")+
+#  guide_colorbar(title="Success\nRate")+
+  facet_grid(App ~ .,scales="free")
+```
+
+```{r stat test}
+summary(aov(Result=="pass" ~  Tool + App + Tool*App + Error(Case),data=d))
+```
+
+According to ANOVA:
+- Tool has ha significant effect on Result.
+- Apparently there is a significant effect of the interaction between Tool and App.
+
+
+Alternative analisis using a logistic equation:
+
+$$ logit(P) = \beta_0 + \sum_{i}{\beta_i \cdot c_i}$$
+
+Where: 
+- $P$ is the probability of success,
+- $\beta_i$ is the i-th coefficient,
+- $c_i$ is the i-th variable,
+- $\beta_0$ is the intercept.
+
+Considering the inverse function, the fitted model can be written as:
+
+$$ P = \frac{1}{1+e^{logit(P)}}$$
+
+All variables are indicator variables whose value can be either 1 or 0.
+
+There is one indicator variable for each level but one of each factor. Among the levels of a nominal factor one is considered the reference, for all the remaining levels the model includes one indicator variable.
+For the _Tool_ variable, the reference level is _EA_, while for the _App_ variable is _omninotes_. Therefore, concerning the _App_ factor, the logistic equation will include the indicator variable $c_{\text{omninotes}}$, with the following meaning: when equal to 1 we have estimation for the _omninotes_ app, when equal to 0 we have the estimation for the _passandroid_ app.
+
+**Note** the model does not include the _E_ (Expresso) tool, but only the visual ones.
+
+```{r regression}
+fit = glm(Pass ~  Tool.*App.,family = "binomial",
+          d %>% filter(Tool!="E") %>% select(Tool,App,Result) %>% mutate(
+                          Pass = Result=="pass",
+                          Tool.=paste0(as.numeric(Tool),as.character(Tool)),
+                          App.=App)
+          )
+
+#summary(fit)
+kable(
+ data.frame(summary(fit)$coefficients) %>%
+  transform(Pr...z..=gsub("(\\d.\\d+)e-0*(\\d+)","$\\1 \\\\cdot 10^{-\\2}$",gsub("(\\d\\.\\d{3})\\d+","\\1",Pr...z..)))
+ ,col.names = c("Estimate","Std. Error","z value","p-value")
+)
+```
+
+
+```{r succ-rate-means,warning=FALSE}
+d %>% group_by(App,Tool) %>% 
+  summarize(
+    SuccRate = sum(Result=="pass")/length(Result),
+    SuccRate.low = prop.test( sum(Result=="pass"),length(Result))$conf.int[1],
+    SuccRate.high = prop.test( sum(Result=="pass"),length(Result))$conf.int[2]
+  ) %>%
+  ggplot(aes(x=factor(Tool,rev(levels(Tool))), y=SuccRate, ymin=SuccRate.low, ymax=SuccRate.high, color=App))+
+      geom_pointrange(position=position_dodge(width=-0.4),fatten=5) + 
+      ylab("Success Rate")+xlab("Tool")+
+      #scale_x_discrete(limits = rev(levels(d$Tool)))+
+      coord_flip()+scale_y_continuous(labels = scales::percent)
+
+```
+
+
+Categories
+
+- pass 10
+- flacky 1-9
+- fail 0
+
+Stacked bars per categories
+
+```{r test-category-bars fig.width="500px", fig.height="900px"}
+
+d.sum %>%# filter(App == "mimanganu") %>%  filter(Tool == "EA" || Tool == "EAJ" || Tool == "CES") %>%
+ group_by(Tool,App,TestCat) %>% count() %>% 
+          group_by(Tool,App) %>% 
+          mutate( prop = n/sum(n),
+                  midpoints = rev(cumsum(rev(prop)))-prop/2) %>% ggplot(aes(x=Tool,y=prop,fill=TestCat))+
+  geom_bar(stat="identity",position="stack")+
+  geom_text(aes(label=paste0(round(prop*100),"%"),y=midpoints),size=3)+
+  #stat_count(aes(y=cumsum(..count..),label=..prop..),geom="text")+
+  scale_fill_brewer(type="qual",palette=6)+
+  scale_y_continuous(labels = scales::percent)+
+  facet_grid(App~.)
+
+```
+
+
+Time
+
+- only pass test execution
+
+
+
+```{r time}
+d %>% filter(Result=="pass") %>% group_by(Tool,App,Case) %>% summarise(Time=mean(TotalTime)/1000) %>% 
+  ggplot(aes(x=Tool,y=Time,group=Tool))+
+  geom_violin(draw_quantiles=c(.5))+
+  stat_summary(geom="point",color="navy")+
+  facet_grid(App ~ .) +
+  ylab("Test case execution time [s]")
+```
+
+```{r time-table}
+d %>% filter(Result=="pass") %>% 
+      group_by(Tool,App) %>% 
+      summarize(Time = mean(TotalTime)/1000) %>% 
+      spread(key = App, value= Time) %>%
+      kable()
+```
+
+ANOVA for time vs. Tool and App, using repeated measure model.
+
+```{r stat-test-time}
+a = summary(aov(TotalTime ~  Tool*App + Error(Case),data=d))
+a
+```
+
+
+Test case time normalized by number of interactions
+
+```{r time-per-interaction, warning=FALSE}
+d %>% filter(Result=="pass") %>% group_by(Tool,App,Case) %>% summarise(Time=mean(TotalTime/NumInteractions)/1000) %>% 
+  ggplot(aes(x=Tool,y=Time,group=Tool))+
+  geom_violin(draw_quantiles=c(.5))+
+  stat_summary(geom="point",color="navy",fun.y = mean)+
+  facet_grid(App ~ .) +
+  ylab("Test case execution time [s] per Interaction")
+```
+
+```{r total-test-execution-time-cumulativ, warning=FALSE, fig.height=16,fig.width=10}
+
+d.cumtime = d %>% mutate(TotalTime = TotalTime/1000) %>% group_by(App,Tool,Case) %>% 
+  summarize(Time = mean(TotalTime,na.rm=T),
+            Time.low = mean(TotalTime,na.rm=T)+sd(TotalTime,na.rm=T)*qnorm(alpha/2),
+            Time.high = mean(TotalTime,na.rm=T)+sd(TotalTime,na.rm=T)*qnorm(1-alpha/2)
+            ) 
+
+d.totcumtime = d.cumtime %>%
+  group_by(App,Tool) %>% summarize(
+    CaseRank = length(Time),
+    CumTime = sum(Time), 
+    CumTime.low=sum(Time.low), 
+    CumTime.high=sum(Time.high)
+  )
+d.sorttime = d.cumtime %>% group_by(App,Case) %>% 
+             summarize(Time = mean(Time,na.rm=TRUE)) %>%
+             group_by(App) %>% mutate(CaseRank = rank(Time)) %>% 
+             select(-Time)
+d.cumtime = d.cumtime %>% 
+            inner_join(d.sorttime,by = c("App","Case")) %>% 
+            arrange(CaseRank) %>%
+            group_by(App,Tool) %>% 
+            mutate(CumTime = cumsum(Time),CumTime.low = cumsum(Time.low),CumTime.high = cumsum(Time.high))
+
+
+g = ggplot(d.cumtime,aes(x=CaseRank,y=CumTime,group=Tool,color=Tool))+
+  geom_line()+
+  facet_grid(App ~ .) +
+  scale_color_brewer(type="qual",palette=2)+
+  scale_fill_brewer(type="qual",palette=2)+
+  geom_text(data=d.totcumtime,aes(label=paste(round(CumTime),Tool)),hjust=0,show.legend = FALSE,size=3)+
+  scale_x_continuous(expand=expand_scale(.03,c(0,2)))+
+  ylab("Cumulative test suite execution time [s]")+xlab("Number of tests")
+
+g
+
+g +geom_ribbon(aes(ymin=CumTime.low,ymax=CumTime.high,fill=Tool),color=NA,alpha=0.5)
+```
+
+```{r total-test-time-mean, warning=FALSE}
+ggplot(d.totcumtime,aes(x=Tool,y=CumTime,ymin=CumTime.low,ymax=CumTime.high,color=App))+
+  geom_pointrange(position=position_dodge(width=-0.4),fatten=5)+
+  coord_flip()+
+  ylab("Cumulative test suite execution time [s]")+xlab("Number of tests")
+
+d.totcumtime %>% select(-CaseRank) %>%
+kable()
+```
+
+
+
+
+
+
+```{r new_barplot, warning=FALSE}
+
+table_rq4 <- read.table(text="App   OmniNotes     PassAndroid      MiMangaNu
+ Original suite              2      2       3
+ Recaptured suite              28      28       30", header=T)
+
+
+table_rq4 <- read.table(text="App   Original Recaptured
+ OmniNotes  6.7 96.7
+ PassAndroid 6.7 96.7
+ MiMangaNu  10 100", header=T)
+
+
+
+table_rq4 %>%
+  gather(key, value, -App) %>% 
+  ggplot(aes(x=App, y=value, fill = key)) +
+    geom_col(position = "dodge") + labs(fill = "Test suite", y = "Percentage of passing test cases") + coord_flip()
+
+
+```
+

@@ -20,7 +20,7 @@ com.fsck.k9.debug;SelectReadUnreadTest;testMarkTwoAsReadUnread;original;fail
 com.fsck.k9.debug;SendMessagesTest;testSendMessage;original;fail
 com.fsck.k9.debug;SendMessagesTest;testDiscard;original;fail
 com.fsck.k9.debug;SendMessagesTest;testSentMessage;original;fail
-com.fsck.k9.debug;SendMessagesTest;testSentMessage;original;fail
+com.fsck.k9.debug;SendMessagesTest;testDraftSend;original;fail
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;original;fail
 com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;original;fail
 com.fsck.k9.debug;MessageOperationsTest;testDeleteAndRestore;original;fail
@@ -50,7 +50,7 @@ com.fsck.k9.debug;SelectReadUnreadTest;testMarkTwoAsReadUnread;retranslated;pass
 com.fsck.k9.debug;SendMessagesTest;testSendMessage;retranslated;pass
 com.fsck.k9.debug;SendMessagesTest;testDiscard;retranslated;pass
 com.fsck.k9.debug;SendMessagesTest;testSentMessage;retranslated;pass
-com.fsck.k9.debug;SendMessagesTest;testSentMessage;retranslated;pass
+com.fsck.k9.debug;SendMessagesTest;testDraftSend;retranslated;pass
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;retranslated;pass
 com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;retranslated;pass
 com.fsck.k9.debug;MessageOperationsTest;testDeleteAndRestore;retranslated;pass

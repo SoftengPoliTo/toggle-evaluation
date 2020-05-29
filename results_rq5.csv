@@ -19,7 +19,7 @@ com.fsck.k9.debug;SelectReadUnreadTest;testMarkAsReadUnread;original;pixel_xl;pa
 com.fsck.k9.debug;SelectReadUnreadTest;testMarkTwoAsReadUnread;original;pixel_xl;pass
 com.fsck.k9.debug;SendMessagesTest;testSendMessage;original;pixel_xl;pass
 com.fsck.k9.debug;SendMessagesTest;testDiscard;original;pixel_xl;pass
-com.fsck.k9.debug;SendMessagesTest;testSentMessage;original;pixel_xl;pass
+com.fsck.k9.debug;SendMessagesTest;testDraftSend;original;pixel_xl;pass
 com.fsck.k9.debug;SendMessagesTest;testSentMessage;original;pixel_xl;pass
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;original;pixel_xl;pass
 com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;original;pixel_xl;pass
@@ -50,7 +50,7 @@ com.fsck.k9.debug;MessageButtonsTest;testInsideMessageButtons;original;nexus_s;p
 com.fsck.k9.debug;SendMessagesTest;testSendMessage;original;nexus_s;fail
 com.fsck.k9.debug;SendMessagesTest;testDraftSend;original;nexus_s;fail
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;original;nexus_s;fail
-com.fsck.k9.debug;SendMessagesTest;testSendMessage;original;nexus_s;fail
+com.fsck.k9.debug;SendMessagesTest;testSentMessage;original;nexus_s;fail
 com.fsck.k9.debug;SendMessagesTest;testDiscard;original;nexus_s;fail
 com.fsck.k9.debug;MessageOperationsTest;testDeleteMessage;original;nexus_s;fail
 com.fsck.k9.debug;MessageOperationsTest;testDeleteFromInside;original;nexus_s;fail
@@ -148,7 +148,7 @@ com.fsck.k9.debug;SendMessagesTest;testSendMessage;original;nexus_5;fail
 com.fsck.k9.debug;SendMessagesTest;testSentMessage;original;nexus_5;fail
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;original;nexus_5;fail
 com.fsck.k9.debug;SendMessagesTest;testDraftSend;original;nexus_5;fail
-com.fsck.k9.debug;SendMessagesTest;testSendMessage;original;nexus_5;fail
+com.fsck.k9.debug;SendMessagesTest;testDiscard;original;nexus_5;fail
 com.fsck.k9.debug;VariousMenuTest;testRightMenuContent;original;nexus_6;fail
 com.fsck.k9.debug;VariousMenuTest;testSettings;original;nexus_6;fail
 com.fsck.k9.debug;VariousMenuTest;testBackToUnifiedInbox;original;nexus_6;fail
@@ -339,7 +339,7 @@ com.fsck.k9.debug;SelectReadUnreadTest;testSelectAll;retranslated;nexus_one;pass
 com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;retranslated;nexus_one;pass
 com.fsck.k9.debug;MessageOperationsTest;testDeleteAndRestore;retranslated;nexus_one;pass
 com.fsck.k9.debug;MessageOperationsTest;testDeleteMessage;retranslated;nexus_one;pass
-com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;retranslated;nexus_one;pass
+com.fsck.k9.debug;MessageOperationsTest;testDeleteFromInside;retranslated;nexus_one;pass
 com.fsck.k9.debug;MessageOperationsTest;testReply;retranslated;nexus_one;pass
 com.fsck.k9.debug;MessageOperationsTest;testReplyAll;retranslated;nexus_one;pass
 com.fsck.k9.debug;MessageOperationsTest;testForward;retranslated;nexus_one;pass
@@ -367,7 +367,7 @@ com.fsck.k9.debug;SendMessagesTest;testDiscard;retranslated;nexus_4;pass
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;retranslated;nexus_4;pass
 com.fsck.k9.debug;SendMessagesTest;testDraftSend;retranslated;nexus_4;pass
 com.fsck.k9.debug;MessageOperationsTest;testDeleteAndRestore;retranslated;nexus_4;pass
-com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;retranslated;nexus_4;pass
+com.fsck.k9.debug;MessageOperationsTest;testDeleteFromInside;retranslated;nexus_4;pass
 com.fsck.k9.debug;MessageOperationsTest;testDeleteMessage;retranslated;nexus_4;pass
 com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;retranslated;nexus_4;pass
 com.fsck.k9.debug;MessageOperationsTest;testReply;retranslated;nexus_4;pass
@@ -522,7 +522,7 @@ com.fsck.k9.debug;SendMessagesTest;testSendMessage;retranslated;pixel;pass
 com.fsck.k9.debug;SendMessagesTest;testDiscard;retranslated;pixel;pass
 com.fsck.k9.debug;SendMessagesTest;testSentMessage;retranslated;pixel;pass
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;retranslated;pixel;pass
-com.fsck.k9.debug;SendMessagesTest;testDraftSend;retranslated;galaxy_nexus;pass
+com.fsck.k9.debug;SendMessagesTest;testDraftSend;retranslated;pixel;pass
 io.github.project_travel_mate;CityInfoTest;testAllButtonsDisplayed;original;pixel_xl;pass
 io.github.project_travel_mate;CityInfoTest;testKnowMoreContent;original;pixel_xl;pass
 io.github.project_travel_mate;CityInfoTest;testFunFactsContent;original;pixel_xl;pass

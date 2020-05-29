@@ -544,3 +544,129 @@ table_rq4 %>%
 
 ```
 
+## RQ5 
+
+```{r load RQ5 data}
+d.frag = read.csv2("results_rq5.csv") %>% 
+         mutate( App = factor( gsub(".+\\.","",gsub("\\.(alpha|debug)$|(project)?_","",package)), 
+                               apps,ordered=TRUE)  ) %>%
+        # fix missing result in data
+         mutate( result = ifelse(result!="",as.character(result),"pass")) %>%
+         mutate( result = factor(result)) %>%
+         select(-package) %>% unique
+
+### fix Schroedinger's test
+d.frag <- d.frag %>% filter(test_case!="testAboutScreen"|
+                            App!="travelmate"|
+                            suite!="retranslated"|
+                            device!="galaxy_nexus"|
+                            result!="fail")
+
+d.frag %>% select(App,test_class,test_case) %>% unique %>%
+            full_join( d.frag %>% select(App,suite,device) %>% unique, by = "App") %>%
+            anti_join(d.frag, by = c("App", "test_class", "test_case", "suite", "device")) %>%
+            mutate(result="fail") -> missing_cases
+
+d.frag <- rbind(d.frag,missing_cases)
+
+d.frag %>% group_by(App,suite,device,result,.drop=FALSE) %>% count() %>% 
+           group_by(App,suite,device) %>% mutate( prop = n / sum(n) ) %>%
+           filter(result=="pass") -> d.frag.sum
+```
+
+```{r fragmentation fragility, fig.width=7, fig.height= 9}
+
+d.frag.sum.sum <- d.frag.sum %>% group_by(device,suite) %>% 
+                  summarize(prop = mean(prop))
+
+ggplot(d.frag.sum,aes(x=prop,y=App,color=App)) +
+  geom_line(aes(group=App),color="gray50") +
+  geom_point(aes(shape=suite),size=3,alpha=0.7) +
+#  geom_text(aes(label=if_else(suite=="retranslated",App,App[0])),hjust=0,nudge_x = 0.1) + 
+  geom_text(aes(label=App),data=d.frag.sum %>% filter(result=="pass") %>%
+                                group_by(App,device) %>% summarize(prop = max(prop)),
+            hjust=0,nudge_x = 0.02,size=2.5,color="grey60") + 
+  geom_vline(aes(xintercept=prop,linetype=suite),data=d.frag.sum.sum,color="grey40") + 
+  geom_text(aes(label=scales::percent(prop),hjust=2.75-as.numeric(suite)*1.5),data=d.frag.sum.sum,
+            color="grey40",y=6.5,size=2) + 
+  scale_color_brewer(type="qual",palette=6,guide="none") +
+  scale_linetype_manual(values=c(2,3)) + 
+  scale_x_continuous(labels=scales::percent, breaks=0:5*.2,
+                     expand = expansion(add=c(0.05,0.1))) +
+  scale_y_discrete(expand = expansion(add=c(0.5,2))) +
+  facet_grid(device ~ .) +
+  xlab("Success rate") +
+  theme_minimal()+
+    theme(panel.grid.major.y = element_blank(),
+          legend.position = "top",
+          axis.text.y = element_blank(),
+          strip.background = element_rect(fill="gray90",color=NA),
+          strip.text.y = element_text(angle=0))
+```
+
+```{r test proportions fragmentation}
+ct = with(d.frag,table(suite,result)[,c(2,1)])
+ct
+prop.test(ct)
+```
+
+
+## RQ6
+
+```{r load RQ6 data}
+d.viz = read.csv2("results_rq6.csv") %>% 
+         mutate( App = factor( gsub(".+\\.","",gsub("\\.(alpha|debug)$|(project)?_","",package)), 
+                               apps,ordered=TRUE)  ) %>%
+         select(-package) %>% unique
+
+
+# d.frag %>% select(App,test_class,test_case) %>% unique %>%
+#             full_join( d.frag %>% select(App,suite,device) %>% unique, by = "App") %>%
+#             anti_join(d.frag, by = c("App", "test_class", "test_case", "suite", "device")) %>%
+#             mutate(result="fail") -> missing_cases
+# 
+# d.frag <- rbind(d.frag,missing_cases)
+
+d.viz %>% group_by(App,suite,result,.drop=FALSE) %>% count() %>% 
+           group_by(App,suite) %>% mutate( prop = n / sum(n) ) %>%
+           filter(result=="pass") -> d.viz.sum
+```
+
+
+```{r visual fragility, fig.width=7, fig.height= 4}
+
+d.viz.sum.sum <- d.viz.sum %>% group_by(suite) %>% 
+                  summarize(prop = mean(prop))
+
+ggplot(d.viz.sum,aes(x=prop,y=App,color=App)) +
+  geom_line(aes(group=App),color="gray50") +
+  geom_point(aes(shape=suite),size=3) +
+#  geom_text(aes(label=if_else(suite=="retranslated",App,App[0])),hjust=0,nudge_x = 0.1) + 
+  geom_text(aes(label=App),data=d.viz.sum %>% filter(result=="pass") %>%
+                                group_by(App) %>% summarize(prop = max(prop)),
+            hjust=0,nudge_x = 0.02,size=3,color="grey40") + 
+  geom_text(aes(label=scales::percent(prop)), hjust=0.5,,vjust=0,nudge_y = 0.2,size=2.5,color="grey60") + 
+  scale_color_brewer(type="qual",palette=6,guide="none") +
+  scale_linetype_manual(values=c(2,3)) + 
+  scale_x_continuous(labels=scales::percent, breaks=0:5*.2,
+                     expand = expansion(add=c(0.05,0.1))) +
+  xlab("Success rate") +
+  theme_minimal()+
+    theme(panel.grid.major.y = element_blank(),
+          legend.position = "top",
+          axis.text.y = element_blank(),
+          strip.background = element_rect(fill="gray90",color=NA),
+          strip.text.y = element_text(angle=0))
+```
+
+
+```{r test proportions visual fragility}
+ct = with(d.viz,table(suite,result)[,c(2,1)])
+ct
+prop.test(ct)
+```
+
+
+
+
+

@@ -108,7 +108,7 @@ com.fsck.k9.debug;SelectReadUnreadTest;testSelectButtons;original;nexus_4;fail
 com.fsck.k9.debug;SelectReadUnreadTest;testSetUnsetStarTest;original;nexus_4;pass
 com.fsck.k9.debug;SelectReadUnreadTest;testSelectAll;original;nexus_4;fail
 com.fsck.k9.debug;SendMessagesTest;testSendMessage;original;nexus_4;fail
-com.fsck.k9.debug;SendMessagesTest;testSentmessage;original;nexus_4;fail
+com.fsck.k9.debug;SendMessagesTest;testSentMessage;original;nexus_4;fail
 com.fsck.k9.debug;SendMessagesTest;testDraftDelete;original;nexus_4;fail
 com.fsck.k9.debug;SendMessagesTest;testDraftSend;original;nexus_4;fail
 com.fsck.k9.debug;SendMessagesTest;testDiscard;original;nexus_4;fail
@@ -320,7 +320,7 @@ com.fsck.k9.debug;MessageOperationsTest;testReply;retranslated;nexus_s;pass
 com.fsck.k9.debug;MessageOperationsTest;testReplyAll;retranslated;nexus_s;pass
 com.fsck.k9.debug;MessageOperationsTest;testForward;retranslated;nexus_s;pass
 com.fsck.k9.debug;SelectReadUnreadTest;testSelectAll;retranslated;nexus_s;pass
-com.fsck.k9.debug;SelectReadUnreadTest;testSetUnsetStar;retranslated;nexus_s;pass
+com.fsck.k9.debug;SelectReadUnreadTest;testSetUnsetStarTest;retranslated;nexus_s;pass
 com.fsck.k9.debug;VariousMenuTest;testRightMenuContent;retranslated;nexus_one;pass
 com.fsck.k9.debug;VariousMenuTest;testSettings;retranslated;nexus_one;pass
 com.fsck.k9.debug;VariousMenuTest;testBackToUnifiedInbox;retranslated;nexus_one;pass
@@ -1600,9 +1600,9 @@ org.ligi.passandroid;TestHomeActivity;testWhatIsIt;original;nexus_s;fail
 org.ligi.passandroid;TestHomeActivity;testLeftMenuIsShown;original;nexus_s;fail
 org.ligi.passandroid;TestPassCreation;testCreatePass;original;nexus_s;fail
 org.ligi.passandroid;TestPassCreation;testCreateMultiplePasses;original;nexus_s;fail
-org.ligi.passandroid;TestPassCreation;testDeletefail;original;nexus_s;fail
+org.ligi.passandroid;TestPassCreation;testDeletePass;original;nexus_s;fail
 org.ligi.passandroid;TestPassCreation;testDeleteWithLongClick;original;nexus_s;fail
-org.ligi.passandroid;TestPassCreation;testEditfail;original;nexus_s;fail
+org.ligi.passandroid;TestPassCreation;testEditPass;original;nexus_s;fail
 org.ligi.passandroid;TestPassCreation;testMenuIsShownUponClick;original;nexus_s;fail
 org.ligi.passandroid;TestPassCreation;testMenuIsShownUponLongClick;original;nexus_s;fail
 org.ligi.passandroid;TestPassEditActivityTypes;testSetToAnyThenGenericWorks;original;nexus_s;fail
@@ -1630,7 +1630,7 @@ org.ligi.passandroid;TestHomeActivity;testWhatIsIt;original;nexus_one;fail
 org.ligi.passandroid;TestHomeActivity;testLeftMenuIsShown;original;nexus_one;pass
 org.ligi.passandroid;TestPassCreation;testCreatePass;original;nexus_one;fail
 org.ligi.passandroid;TestPassCreation;testCreateMultiplePasses;original;nexus_one;fail
-org.ligi.passandroid;TestPassCreation;testDeletefail;original;nexus_one;fail
+org.ligi.passandroid;TestPassCreation;testDeletePass;original;nexus_one;fail
 org.ligi.passandroid;TestPassCreation;testDeleteWithLongClick;original;nexus_one;fail
 org.ligi.passandroid;TestPassCreation;testEditPass;original;nexus_one;fail
 org.ligi.passandroid;TestPassCreation;testMenuIsShownUponClick;original;nexus_one;fail
@@ -1660,7 +1660,7 @@ org.ligi.passandroid;TestHomeActivity;testWhatIsIt;original;nexus_4;fail
 org.ligi.passandroid;TestHomeActivity;testLeftMenuIsShown;original;nexus_4;fail
 org.ligi.passandroid;TestPassCreation;testCreatePass;original;nexus_4;fail
 org.ligi.passandroid;TestPassCreation;testCreateMultiplePasses;original;nexus_4;fail
-org.ligi.passandroid;TestPassCreation;testDeletefail;original;nexus_4;fail
+org.ligi.passandroid;TestPassCreation;testDeletePass;original;nexus_4;fail
 org.ligi.passandroid;TestPassCreation;testDeleteWithLongClick;original;nexus_4;fail
 org.ligi.passandroid;TestPassCreation;testEditPass;original;nexus_4;pass
 org.ligi.passandroid;TestPassCreation;testMenuIsShownUponClick;original;nexus_4;fail
@@ -1690,7 +1690,7 @@ org.ligi.passandroid;TestHomeActivity;testWhatIsIt;original;nexus_5;fail
 org.ligi.passandroid;TestHomeActivity;testLeftMenuIsShown;original;nexus_5;fail
 org.ligi.passandroid;TestPassCreation;testCreatePass;original;nexus_5;fail
 org.ligi.passandroid;TestPassCreation;testCreateMultiplePasses;original;nexus_5;fail
-org.ligi.passandroid;TestPassCreation;testDeletefail;original;nexus_5;fail
+org.ligi.passandroid;TestPassCreation;testDeletePass;original;nexus_5;fail
 org.ligi.passandroid;TestPassCreation;testDeleteWithLongClick;original;nexus_5;fail
 org.ligi.passandroid;TestPassCreation;testEditPass;original;nexus_5;fail
 org.ligi.passandroid;TestPassCreation;testMenuIsShownUponClick;original;nexus_5;fail
@@ -1720,7 +1720,7 @@ org.ligi.passandroid;TestHomeActivity;testWhatIsIt;original;nexus_6;fail
 org.ligi.passandroid;TestHomeActivity;testLeftMenuIsShown;original;nexus_6;pass
 org.ligi.passandroid;TestPassCreation;testCreatePass;original;nexus_6;pass
 org.ligi.passandroid;TestPassCreation;testCreateMultiplePasses;original;nexus_6;fail
-org.ligi.passandroid;TestPassCreation;testDeletefail;original;nexus_6;fail
+org.ligi.passandroid;TestPassCreation;testDeletePass;original;nexus_6;fail
 org.ligi.passandroid;TestPassCreation;testDeleteWithLongClick;original;nexus_6;fail
 org.ligi.passandroid;TestPassCreation;testEditPass;original;nexus_6;pass
 org.ligi.passandroid;TestPassCreation;testMenuIsShownUponClick;original;nexus_6;pass
@@ -1780,7 +1780,7 @@ org.ligi.passandroid;TestHomeActivity;testWhatIsIt;original;galaxy_nexus;fail
 org.ligi.passandroid;TestHomeActivity;testLeftMenuIsShown;original;galaxy_nexus;fail
 org.ligi.passandroid;TestPassCreation;testCreatePass;original;galaxy_nexus;fail
 org.ligi.passandroid;TestPassCreation;testCreateMultiplePasses;original;galaxy_nexus;fail
-org.ligi.passandroid;TestPassCreation;testDeletefail;original;galaxy_nexus;fail
+org.ligi.passandroid;TestPassCreation;testDeletePass;original;galaxy_nexus;fail
 org.ligi.passandroid;TestPassCreation;testDeleteWithLongClick;original;galaxy_nexus;fail
 org.ligi.passandroid;TestPassCreation;testEditPass;original;galaxy_nexus;pass
 org.ligi.passandroid;TestPassCreation;testMenuIsShownUponClick;original;galaxy_nexus;fail

@@ -592,7 +592,7 @@ ggplot(d.frag.sum,aes(x=prop,y=App,color=App)) +
   scale_color_brewer(type="qual",palette=6,guide="none") +
   scale_linetype_manual(values=c(2,3)) + 
   scale_x_continuous(labels=scales::percent, breaks=0:5*.2,
-                     expand = expansion(add=c(0.05,0.1))) +
+                     expand = expansion(add=c(0.05,0.13))) +
   scale_y_discrete(expand = expansion(add=c(0.5,2))) +
   facet_grid(device ~ .) +
   xlab("Success rate") +
@@ -644,8 +644,8 @@ ggplot(d.viz.sum,aes(x=prop,y=App,color=App)) +
 #  geom_text(aes(label=if_else(suite=="retranslated",App,App[0])),hjust=0,nudge_x = 0.1) + 
   geom_text(aes(label=App),data=d.viz.sum %>% filter(result=="pass") %>%
                                 group_by(App) %>% summarize(prop = max(prop)),
-            hjust=0,nudge_x = 0.02,size=3,color="grey40") + 
-  geom_text(aes(label=scales::percent(prop)), hjust=0.5,,vjust=0,nudge_y = 0.2,size=2.5,color="grey60") + 
+            hjust=0.1,vjust=1,nudge_y = -0.2,size=3,color="grey40") + 
+  geom_text(aes(label=scales::percent(prop)), hjust=0.5,vjust=0,nudge_y = 0.2,size=2.5,color="grey60") + 
   scale_color_brewer(type="qual",palette=6,guide="none") +
   scale_linetype_manual(values=c(2,3)) + 
   scale_x_continuous(labels=scales::percent, breaks=0:5*.2,

@@ -2,8 +2,8 @@ package;test_class;test_case;suite;result
 com.fsck.k9.debug;VariousMenuTest;testRightMenuContent;original;fail
 com.fsck.k9.debug;VariousMenuTest;testSettings;original;fail
 com.fsck.k9.debug;VariousMenuTest;testBackToUnifiedInbox;original;fail
-com.fsck.k9.debug;VariousMenuTest;testAccountFolders;original;pass
-com.fsck.k9.debug;VariousMenuTest;testAbout;original;pass
+com.fsck.k9.debug;VariousMenuTest;testAccountFolders;original;fail
+com.fsck.k9.debug;VariousMenuTest;testAbout;original;fail
 com.fsck.k9.debug;MessageSortTest;testSortBySubject;original;fail
 com.fsck.k9.debug;MessageSortTest;testSortBySender;original;fail
 com.fsck.k9.debug;MessageSortTest;testSortByReadUnread;original;fail
@@ -11,7 +11,7 @@ com.fsck.k9.debug;MessageSortTest;testSortByArrival;original;fail
 com.fsck.k9.debug;MessageSortTest;testSortByDate;original;fail
 com.fsck.k9.debug;MessageButtonsTest;testNavigateMessagesRight;original;fail
 com.fsck.k9.debug;MessageButtonsTest;testNavigateMessagesLeft;original;fail
-com.fsck.k9.debug;MessageButtonsTest;testInsideMessageButtons;original;fail
+com.fsck.k9.debug;MessageButtonsTest;testInsideMessageButtons;original;pass
 com.fsck.k9.debug;SelectReadUnreadTest;testSetUnsetStarTest;original;fail
 com.fsck.k9.debug;SelectReadUnreadTest;testSelectAll;original;fail
 com.fsck.k9.debug;SelectReadUnreadTest;testSelectButtons;original;fail
@@ -26,9 +26,9 @@ com.fsck.k9.debug;MessageOperationsTest;testStarFromInside;original;fail
 com.fsck.k9.debug;MessageOperationsTest;testDeleteAndRestore;original;fail
 com.fsck.k9.debug;MessageOperationsTest;testDeleteFromInside;original;fail
 com.fsck.k9.debug;MessageOperationsTest;testDeleteMessage;original;fail
-com.fsck.k9.debug;MessageOperationsTest;testReply;original;fail
-com.fsck.k9.debug;MessageOperationsTest;testReplyAll;original;fail
-com.fsck.k9.debug;MessageOperationsTest;testForward;original;fail
+com.fsck.k9.debug;MessageOperationsTest;testReply;original;pass
+com.fsck.k9.debug;MessageOperationsTest;testReplyAll;original;pass
+com.fsck.k9.debug;MessageOperationsTest;testForward;original;pass
 com.fsck.k9.debug;VariousMenuTest;testRightMenuContent;retranslated;pass
 com.fsck.k9.debug;VariousMenuTest;testSettings;retranslated;pass
 com.fsck.k9.debug;VariousMenuTest;testBackToUnifiedInbox;retranslated;pass
@@ -245,7 +245,7 @@ ar.rulosoft.mimanganu;TestInterfaceBasic;testSettingsMenu2;original;pass
 ar.rulosoft.mimanganu;TestInterfaceBasic;testDownloadMenu;original;fail
 ar.rulosoft.mimanganu;TestInterfaceBasic;testSearchUnsearchUpdates;original;fail
 ar.rulosoft.mimanganu;TestInterfaceBasic;testAddManga;original;fail
-ar.rulosoft.mimanganu;TestInterfaceBasic;testCheckMangaChapters;original;fail
+ar.rulosoft.mimanganu;TestInterfaceBasic;testCheckMangaChapters;original;pass
 ar.rulosoft.mimanganu;TestMangaVisualizationOptions;testOptionsReader;original;fail
 ar.rulosoft.mimanganu;TestMangaVisualizationOptions;testOptionsDirection;original;fail
 ar.rulosoft.mimanganu;TestMangaVisualizationOptions;testOptionsFit;original;fail

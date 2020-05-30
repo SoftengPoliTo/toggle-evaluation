@@ -1,9 +1,9 @@
 package;test_class;test_case;suite;result
-com.fsck.k9.debug;VariousMenuTest;testRightMenuContent;original;fail
-com.fsck.k9.debug;VariousMenuTest;testSettings;original;fail
+com.fsck.k9.debug;VariousMenuTest;testRightMenuContent;original;pass
+com.fsck.k9.debug;VariousMenuTest;testSettings;original;pass
 com.fsck.k9.debug;VariousMenuTest;testBackToUnifiedInbox;original;fail
-com.fsck.k9.debug;VariousMenuTest;testAccountFolders;original;fail
-com.fsck.k9.debug;VariousMenuTest;testAbout;original;fail
+com.fsck.k9.debug;VariousMenuTest;testAccountFolders;original;pass
+com.fsck.k9.debug;VariousMenuTest;testAbout;original;pass
 com.fsck.k9.debug;MessageSortTest;testSortBySubject;original;fail
 com.fsck.k9.debug;MessageSortTest;testSortBySender;original;fail
 com.fsck.k9.debug;MessageSortTest;testSortByReadUnread;original;fail
@@ -11,7 +11,7 @@ com.fsck.k9.debug;MessageSortTest;testSortByArrival;original;fail
 com.fsck.k9.debug;MessageSortTest;testSortByDate;original;fail
 com.fsck.k9.debug;MessageButtonsTest;testNavigateMessagesRight;original;fail
 com.fsck.k9.debug;MessageButtonsTest;testNavigateMessagesLeft;original;fail
-com.fsck.k9.debug;MessageButtonsTest;testInsideMessageButtons;original;pass
+com.fsck.k9.debug;MessageButtonsTest;testInsideMessageButtons;original;fail
 com.fsck.k9.debug;SelectReadUnreadTest;testSetUnsetStarTest;original;fail
 com.fsck.k9.debug;SelectReadUnreadTest;testSelectAll;original;fail
 com.fsck.k9.debug;SelectReadUnreadTest;testSelectButtons;original;fail
